@@ -1,0 +1,197 @@
+{
+  "schema_version": "0.4.0",
+  "metadata": {
+    "name": "price-oracle",
+    "version": "1.0.0",
+    "build": {
+      "compiler": "rustc 1.86.0",
+      "builder": "cargo-near cargo-near-build 0.11.1"
+    },
+    "wasm_hash": "9yqXV3X7U85zbCtRC12soN1XcbHLmd6zAeQzUt9AxMnB"
+  },
+  "body": {
+    "functions": [
+      {
+        "name": "clear_prices",
+        "doc": " Clear all prices (for reset)",
+        "kind": "call"
+      },
+      {
+        "name": "contract_source_metadata",
+        "kind": "view"
+      },
+      {
+        "name": "get_last_update",
+        "doc": " Get the last update timestamp",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0.0
+          }
+        }
+      },
+      {
+        "name": "get_min_sources",
+        "doc": " Get minimum sources required",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "integer",
+            "format": "uint8",
+            "minimum": 0.0
+          }
+        }
+      },
+      {
+        "name": "get_price",
+        "doc": " Get the aggregated NEAR price (average of all sources)\n Returns price in micro-dollars",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "integer",
+            "format": "uint128",
+            "minimum": 0.0
+          }
+        }
+      },
+      {
+        "name": "get_price_details",
+        "doc": " Get detailed price info from all sources",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/PriceReport"
+            }
+          }
+        }
+      },
+      {
+        "name": "get_source_count",
+        "doc": " Get number of price sources",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "integer",
+            "format": "uint8",
+            "minimum": 0.0
+          }
+        }
+      },
+      {
+        "name": "init",
+        "doc": " Initialize with custom min sources",
+        "kind": "call",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "min_sources",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint8",
+                "minimum": 0.0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "is_valid",
+        "doc": " Check if we have enough sources for a valid price",
+        "kind": "view",
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "boolean"
+          }
+        }
+      },
+      {
+        "name": "report_price",
+        "doc": " Submit a price report from an external source\n price_usd should be in micro-dollars (e.g., $5.25 = 5250000)",
+        "kind": "call",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "source",
+              "type_schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "price_usd",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint128",
+                "minimum": 0.0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "set_min_sources",
+        "doc": " Set minimum sources (owner only)",
+        "kind": "call",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "min_sources",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint8",
+                "minimum": 0.0
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "root_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "String",
+      "type": "string",
+      "definitions": {
+        "PriceReport": {
+          "description": "Price data from a single source",
+          "type": "object",
+          "required": [
+            "price_usd",
+            "reporter",
+            "source",
+            "timestamp"
+          ],
+          "properties": {
+            "price_usd": {
+              "type": "integer",
+              "format": "uint128",
+              "minimum": 0.0
+            },
+            "reporter": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      }
+    }
+  }
+}
