@@ -1,0 +1,14 @@
+# Build artifacts
+target/
+*.wasm
+
+# Rust
+Cargo.lock
+**/*.rs.bk
+
+# OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo

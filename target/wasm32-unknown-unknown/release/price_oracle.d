@@ -1,1 +1,0 @@
-/Users/asil/.openclaw/workspace/oracle-contract/target/wasm32-unknown-unknown/release/price_oracle.wasm: /Users/asil/.openclaw/workspace/oracle-contract/src/lib.rs /Users/asil/.openclaw/workspace/oracle-contract/target/near/price_oracle_abi.zst
